@@ -1,6 +1,10 @@
 package projeto.application;
 import projeto.entities.cadastroItem;
 import projeto.entities.membros;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Locale;
 import java.util.List;
@@ -64,7 +68,7 @@ public class program {
                             System.out.println("-----------------------------------------------------------------------------");
                             System.out.println("1- CADASTRAR MEMBRO / 2- CADASTRAR ITEM / ");
                             System.out.println("3- REMOVER ITEM / 4- ATUALIZAR ITEM / ");
-                            System.out.println("5- EXIBIR DADOS ARMAZENADOS / 6- SAIR");
+                            System.out.println("5- EMITIR RELATORIO / 6- SAIR");
                             System.out.println("-----------------------------------------------------------------------------");
                             System.out.println("Digite a opção desejada: ");
                                 opcao = sc.nextInt();
@@ -160,8 +164,6 @@ public class program {
                                     }while (loop3);
                                     System.out.println();
                                     
-                                    //COLOCAR O REMOVE COM BASE NO INDICE
-                                    
                                     for (cadastroItem item : listaCadastro){
                                         System.out.println(item.toString());
                                     }                   
@@ -253,18 +255,20 @@ public class program {
                                     }
                                 break;
                                 case 5:
-                                //EXIBIR DADOS ARMAZENADOS
-                
-                                    for (membros membro : listaMembros){
-                                        System.out.println("----------------------------------------------------------------------------------");
-                                        System.out.println(membro.toString());
-                                        System.out.println("----------------------------------------------------------------------------------");
-                                    }
-                                    for(cadastroItem item : listaCadastro){
-                                        System.out.println("----------------//----------------------------------------------------------------");
-                                        System.out.println(item.toString());   
-                                        System.out.println("----------------//----------------------------------------------------------------");
+                                //EMITIR RELATORIO
+                                    String path = "C:\\Users\\jonat\\Desktop\\MATERIAL DE ESTUDO\\Ciencia da Computação\\Programação\\JAVA\\ibs-inventory-manager\\report.txt";
+
+                                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))){
+                                        for (membros membro : listaMembros){
+                                            bw.write(membro.toString());
+                                            bw.newLine();
+                                        }for (cadastroItem item : listaCadastro) {
+                                            bw.write(item.toString());
+                                            bw.newLine();
                                         }
+                                    } catch (IOException e){
+                                        e.printStackTrace();
+                                    }
                 
                                 case 6:
                                     voltarMenu2 = false;
